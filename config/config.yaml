@@ -1,0 +1,71 @@
+port: 0
+socks-port: 0
+mixed-port: 0
+redir-port: 0
+tproxy-port: 0
+allow-lan: false 
+tcp-concurrent: true
+ipv6: flase
+log-level: warning # warning debug
+authentication:
+  - "kLSLFYYh:KZeJIteGNoHEieP0"
+skip-auth-prefixes:
+  - 127.0.0.1/8
+  
+external-ui-url: https://github.com/Zephyruso/zashboard/releases/latest/download/dist.zip
+external-ui-name: zb
+external-ui: ui
+external-controller: :60000
+secret: LQDvFTorgc9byihnK9RX
+
+profile:
+  store-selected: true
+  store-fake-ip: true
+
+hosts:
+  "localhost": 127.0.0.1
+
+tun:
+  enable: true
+  include-uid: [1001]
+  
+dns:
+  enable: true
+  listen: :59999
+  ipv6: true
+  use-hosts: true
+  enhanced-mode: fake-ip
+  fake-ip-filter: ['*', '+.lan', '+.local', '+.direct', '+.docker.io']
+  nameserver: [8.8.8.8, 1.1.1.1, 2001:4860:4860::8888]
+  nameserver-policy:
+    "rule-set:category-ai-!cn": 157.20.104.47
+
+rules:
+  - MATCH,DIRECT
+
+listeners:
+  - name: tu5-in
+    type: tuic
+    port: 60002
+    listen: "::"
+    users:
+      1b0c4eac-9fe3-44f0-a0a3-fba3360d9b5d: R6tUfzbcHhhPqRiZwTzz7vmgFX
+    certificate: ./server.crt
+    private-key: ./server.key
+    congestion-controller: bbr
+    max-idle-time: 15000
+    authentication-timeout: 1000
+    alpn: [h3]
+    max-udp-relay-packet-size: 1500
+    
+  - name: hy2
+    type: hysteria2
+    port: 60003
+    listen: "::"
+    users:
+      hy2-in: AqtrWorspa1MeA5bc80A
+    up: 1000
+    down: 1000
+    masquerade: "https://bing.com"
+    certificate: ./server.crt
+    private-key: ./server.key
